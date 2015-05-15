@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="ticTacToeApp">
+    <head>
+        <meta charset="utf-8">
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="CSS/normalize.css">
+        <link rel="stylesheet" href="CSS/style.css">
+        <script src="JS/angular.js"></script>
+        <script src="JS/app.js"></script>
+       <script src="JS/controller.js"></script>
+    </head>
+    <body ng-controller="MainController as mainCtrl">
+
+        <div class="board">
+
+            <div class="holes" ng-repeat="box in mainCtrl.grid" 
+                               ng-click="mainCtrl.clickBox($index)"
+                               ng-class="{X: box.status === 'X',
+                                         O: box.status === 'O'}"> 
+
+            </div>
+
+            <h1>{{mainCtrl.winner}}</h1>
+
+        </div>
+<!-- 
+            <div class="holes" ng-repeat="h in guacCtrl.holes" ng-click="guacCtrl.whackMole($index)" ng-class="{'mole': h.moleIsHere}"></div> -->
+
+
+
+
+        
+        <!-- 1 - Find out the name of the angular module, and attach it to the html element at the top -->
+
+        <!-- 2 - Find out the name of the angular controller, and attach it to the body element. Find a way to test that the controller is indeed linked!  -->
+
+        <!-- 5 - use ng-repeat to display your array of holes. Each one should have a class of "hole" that gives it a width, height, and border -->
+
+        <!-- 6 - use ng-class to show mole.png as a background image in your CSS, if the mole is in that hole. Use this link as a resource on how to use ng-class (scroll down to the section titled "ng-class using evaluated expression"): https://scotch.io/tutorials/the-many-ways-to-use-ngclass#ngclass-using-evaluated-expression  -->
+
+        <!-- 8 - attach your whackMole function to the holes using ng-click. You might want to use '$index' to identify exactly which hole is being clicked, like in this example: http://jsbin.com/fayazo/1/edit?html,js,output -->
+
+    </body>
+</html>

@@ -1,0 +1,26 @@
+html {
+    background-image: url("https://i.imgur.com/LoxwiRU.jpge");
+  }
+
+.board {
+    width: 39em;
+    height: 39em;
+    background-color: solid red;
+    margin: 5em auto;
+    text-align: center;
+
+}
+
+.holes {
+    display: inline-block;
+    width: 12em;
+    height: 10em;
+    border: solid;
+
+}
+.X{
+	background-image: url(x.jpg) ;
+}
+.O{
+	background-image: url(o.jpg) ;
+}
