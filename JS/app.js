@@ -1,2 +1,2 @@
-angular
-    .module('ticTacToeApp', []);
+var myApp = angular
+    .module('myApp',['firebase']);

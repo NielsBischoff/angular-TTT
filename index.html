@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html ng-app="ticTacToeApp">
+<html ng-app='myApp'>
     <head>
         <meta charset="utf-8">
         <title>Tic Tac Toe</title>
         <link rel="stylesheet" href="CSS/normalize.css">
         <link rel="stylesheet" href="CSS/style.css">
+        
         <script src="JS/angular.js"></script>
+
+        <script src="JS/firebase.js"></script>
+        <script src="JS/angularfire.js"></script>
         <script src="JS/app.js"></script>
-       <script src="JS/controller.js"></script>
+        <script src="JS/controller.js"></script>
     </head>
     <body ng-controller="MainController as mainCtrl">
 
@@ -20,9 +24,11 @@
 
             </div>
 
-            <h1>{{mainCtrl.winner}}</h1>
+            <h1>{{mainCtrl.hello}}</h1>
 
         </div>
+    </body>
+</html>
 <!-- 
             <div class="holes" ng-repeat="h in guacCtrl.holes" ng-click="guacCtrl.whackMole($index)" ng-class="{'mole': h.moleIsHere}"></div> -->
 
@@ -40,5 +46,3 @@
 
         <!-- 8 - attach your whackMole function to the holes using ng-click. You might want to use '$index' to identify exactly which hole is being clicked, like in this example: http://jsbin.com/fayazo/1/edit?html,js,output -->
 
-    </body>
-</html>

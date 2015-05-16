@@ -1,58 +1,68 @@
-angular
-	.module("ticTacToeApp")
-	.controller("MainController", MainController);
+myApp.controller('MainController', MainController);
 
-	function MainController(){
+	MainController.$inject = ['$firebaseArray']
+
+	function MainController($firebaseArray){
 		var self = this;
-		var token = "X"
+		var token = "X";
 //self.winner returns a token when get.Winner becomes truthy
 		self.winner = ""
 //self.clickBox listens to the click
+		self.TTT = getGrid()
 		self.clickBox = clickBox;
 		self.getWinner = getWinner;	
 		self.grid = [{status: null},{status: null},{status: null},
 					 {status: null},{status: null},{status: null},
 					 {status: null},{status: null},{status: null}];
-		
+
+	function getGrid() {			 
+  	var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid1");
+	var board = $firebaseArray(ref);
+            return board;}
+//field gets clicked and array index gets pased into function					 
 		function clickBox($index){
-			if(self.winner || self.grid[$index].status){
-				return
-			}
+//double function; if self winner exists stop or if
+	
 
-			console.log($index)
-			self.grid[$index].status = token
-			console.log(self.grid[$index])
-			
-			self.getWinner()
+	if(self.winner || self.grid[$index].status){
+		
+	}
 
-			if (token === "O"){
-				token = "X" 
-			}else{
-				token = "O"
-			}
-			
-		} 
-		function getWinner(){
-			if ((self.grid[0].status === token) && (self.grid[1].status === token) && (self.grid[2].status === token)||
-				(self.grid[3].status === token) && (self.grid[4].status === token) && (self.grid[5].status === token)||
-				(self.grid[6].status === token) && (self.grid[7].status === token) && (self.grid[8].status === token)||
+	console.log($index)
+	self.grid[$index].status = token
+	console.log(self.grid[$index])
+	
+	self.getWinner()
 
-				(self.grid[0].status === token) && (self.grid[3].status === token) && (self.grid[6].status === token)||
-				(self.grid[4].status === token) && (self.grid[1].status === token) && (self.grid[7].status === token)||
-				(self.grid[2].status === token) && (self.grid[5].status === token) && (self.grid[8].status === token)||
+	if (token === "O"){
+		token = "X" 
+	}else{
+		token = "O"
+	}
+	
+} 
+function getWinner(){
+	if ((self.grid[0].status === token) && (self.grid[1].status === token) && (self.grid[2].status === token)||
+		(self.grid[3].status === token) && (self.grid[4].status === token) && (self.grid[5].status === token)||
+		(self.grid[6].status === token) && (self.grid[7].status === token) && (self.grid[8].status === token)||
 
-				(self.grid[0].status === token) && (self.grid[4].status === token) && (self.grid[8].status === token)||
-				(self.grid[6].status === token) && (self.grid[4].status === token) && (self.grid[2].status === token)
-			){
-				self.winner = token + " wins!"
-			}
+		(self.grid[0].status === token) && (self.grid[3].status === token) && (self.grid[6].status === token)||
+		(self.grid[4].status === token) && (self.grid[1].status === token) && (self.grid[7].status === token)||
+		(self.grid[2].status === token) && (self.grid[5].status === token) && (self.grid[8].status === token)||
+
+		(self.grid[0].status === token) && (self.grid[4].status === token) && (self.grid[8].status === token)||
+		(self.grid[6].status === token) && (self.grid[4].status === token) && (self.grid[2].status === token)
+	){
+		self.winner = token + " wins!"
+	}
+}
 
 				
-// 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
-// 		boxes[6].innerHTML == "X" && boxes[7].innerHTML == "X" && boxes[8].innerHTML == "X" ||
+// // 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
+// // 		boxes[6].innerHTML == "X" && boxes[7].innerHTML == "X" && boxes[8].innerHTML == "X" ||
 			
-		}
-	}
+// 		}
+	//}
 
 
 // 	if ()
@@ -153,7 +163,7 @@ angular
 // //Make the boxes listen for a player's click and return it back to the function
 // for(i = 0; i < boxes.length; i++) {
 // 	boxes[i].addEventListener("click", handlePlayerClick);
-// } 
+//} 
 
 
 
