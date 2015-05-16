@@ -8,7 +8,7 @@ myApp.controller('MainController', MainController);
 //self.winner returns a token when get.Winner becomes truthy
 		self.winner = ""
 //self.clickBox listens to the click
-		self.TTT = getGrid()
+		self.grid = getGrid()
 		self.clickBox = clickBox;
 		self.getWinner = getWinner;	
 		self.grid = [{status: null},{status: null},{status: null},
@@ -19,18 +19,20 @@ myApp.controller('MainController', MainController);
   	var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid1");
 	var board = $firebaseArray(ref);
             return board;}
+        
+
 //field gets clicked and array index gets pased into function					 
-		function clickBox($index){
+		function clickBox(index){
 //double function; if self winner exists stop or if
 	
 
-	if(self.winner || self.grid[$index].status){
-		
+	if(self.winner || self.grid[index].status){
+	return;	
 	}
 
-	console.log($index)
-	self.grid[$index].status = token
-	console.log(self.grid[$index])
+	console.log(index)
+	self.grid[index].status = token
+	console.log(self.grid[index])
 	
 	self.getWinner()
 
@@ -39,6 +41,8 @@ myApp.controller('MainController', MainController);
 	}else{
 		token = "O"
 	}
+
+	if self.getWinner
 	
 } 
 function getWinner(){
@@ -56,7 +60,7 @@ function getWinner(){
 		self.winner = token + " wins!"
 	}
 }
-
+}
 				
 // // 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
 // // 		boxes[6].innerHTML == "X" && boxes[7].innerHTML == "X" && boxes[8].innerHTML == "X" ||

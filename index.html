@@ -14,9 +14,9 @@
         <script src="JS/controller.js"></script>
     </head>
     <body ng-controller="MainController as mainCtrl">
-
+        
         <div class="board">
-
+            <h1>{{mainCtrl.winner}}</h1>
             <div class="holes" ng-repeat="box in mainCtrl.grid" 
                                ng-click="mainCtrl.clickBox($index)"
                                ng-class="{X: box.status === 'X',
@@ -24,7 +24,7 @@
 
             </div>
 
-            <h1>{{mainCtrl.hello}}</h1>
+            
 
         </div>
     </body>
