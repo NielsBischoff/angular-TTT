@@ -1,74 +1,118 @@
-myApp.controller('MainController', MainController);
+angular
+	.module('myApp')
+	.controller('MainController', MainController);
 
 	MainController.$inject = ['$firebaseArray']
 
 	function MainController($firebaseArray){
 		var self = this;
-		var token = "X";
-//self.winner returns a token when get.Winner becomes truthy
-		self.winner = ""
+		self.gameInfo = gameInfo();
+// //self.winner returns a self.gameInfo.turn when get.Winner becomes truthy
+ // 	self.winner = ""
 //displays the grid
-		self.grid = getGrid()
-//self.clickBox listens to the click		
-		self.clickBox = clickBox;
-//reset the field back to empty
-		self.reset = reset;
+		self.grid = getGrid();
+// //self.clickBox listens to the click		
+ 		self.clickBox = clickBox;
+ 		console.log("works")
+// //reset the field back to empty
+// 		self.reset = reset;
 
-		self.getWinner = getWinner;	
-		self.grid = [{status: null},{status: null},{status: null},
-					 {status: null},{status: null},{status: null},
-					 {status: null},{status: null},{status: null}];
+		self.gameInfo = gameInfo();
+		
 
-	function getGrid() {			 
-  	var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid1");
-	var board = $firebaseArray(ref);
-            return board;}
-        
+		//self.getWinner = getWinner;	
+		// self.grid = [{status: null},{status: null},{status: null},
+		// 			 {status: null},{status: null},{status: null},
+		// 			 {status: null},{status: null},{status: null}];
 
-//field gets clicked and array index gets pased into function					 
+
+
+		function getGrid() {			 
+	  		var ref = new Firebase("https://tictactoe549872de.firebaseio.com/gird1");
+			var board = $firebaseArray(ref);
+	            return board
+	    }
+	    
+	    function gameInfo() {			 
+	  		var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid2");
+			var info = $firebaseArray(ref);
+	            return info
+	    }   
+	
+
+	//field gets clicked and array index gets pased into function				 
 		function clickBox(index){
-//double function; if self winner exists stop or if
-	
-
-	if(self.winner || self.grid[index].status){
-	return;	
-	}
-
-	console.log(index)
-	self.grid[index].status = token
-	console.log(self.grid[index])
-	
-	self.getWinner()
-
-	if (token === "O"){
-		token = "X" 
-	}else{
-		token = "O"
+	//double function; if self winner exists - stop || prevent double click ||
+	 	if(self.winner || self.grid[index].status){
+	 	return	
+	 	}
 	}
 	
-} 
+// 	console.log(index)
+// 	self.grid[index].status = self.gameInfo.turn
+// 	console.log(self.grid[index])
+	
+//	self.getWinner()
+// //tie function
+// 	var no_tie = false;
+// 	for (var i = 0; i < 9; i++){
+// 		if(self.grid[i].status == null)
+// 		{ no_tie = true;
+// 		}
+// 		}
+// 	if(no_tie === false){
+// 		self.winner = "It's a Tie!"
+// 	}
+
+
+
+// 	if (self.gameInfo.turn === ""X){
+// 		self.gameInfo.turn = "X" 
+// 		//pushing up info to firebase
+// 	self.getGrid.$save(self.getGrid);	
+// 	}
+
+// 	else{
+// 		self.gameInfo.turn = "O"
+// 	self.getGrid.$save(self.getGrid);	
+// 	}
+// 	self.getGrid.$save(self.getGrid);	
+// } 
 	function getWinner(){
-	if ((self.grid[0].status === token) && (self.grid[1].status === token) && (self.grid[2].status === token)||
-		(self.grid[3].status === token) && (self.grid[4].status === token) && (self.grid[5].status === token)||
-		(self.grid[6].status === token) && (self.grid[7].status === token) && (self.grid[8].status === token)||
+	if ((self.grid[0].status === self.gameInfo.turn) && (self.grid[1].status === self.gameInfo.turn) && (self.grid[2].status === self.gameInfo.turn)||
+		(self.grid[3].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[5].status === self.gameInfo.turn)||
+		(self.grid[6].status === self.gameInfo.turn) && (self.grid[7].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
 
-		(self.grid[0].status === token) && (self.grid[3].status === token) && (self.grid[6].status === token)||
-		(self.grid[4].status === token) && (self.grid[1].status === token) && (self.grid[7].status === token)||
-		(self.grid[2].status === token) && (self.grid[5].status === token) && (self.grid[8].status === token)||
+		(self.grid[0].status === self.gameInfo.turn) && (self.grid[3].status === self.gameInfo.turn) && (self.grid[6].status === self.gameInfo.turn)||
+		(self.grid[4].status === self.gameInfo.turn) && (self.grid[1].status === self.gameInfo.turn) && (self.grid[7].status === self.gameInfo.turn)||
+		(self.grid[2].status === self.gameInfo.turn) && (self.grid[5].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
 
-		(self.grid[0].status === token) && (self.grid[4].status === token) && (self.grid[8].status === token)||
-		(self.grid[6].status === token) && (self.grid[4].status === token) && (self.grid[2].status === token)
+		(self.grid[0].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
+		(self.grid[6].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[2].status === self.gameInfo.turn)
 	){
-		self.winner = token + " wins!"
+		self.winner = self.gameInfo.turn + " wins!"
 	}
 	}
 		
-		function reset(){
-		console.log("reset is on!")
-			for(var i = 0; i < 9; i++){
-			self.grid[i].status = "";}
-		} 
-}
+// 		function reset(){
+// 		console.log("reset is on!")
+// 			for(var i = 0; i < 9; i++){
+// 			self.grid[i].status = "";}
+// 		} 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 				
 // // 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
@@ -82,8 +126,8 @@ myApp.controller('MainController', MainController);
 
 // 	}
 
-// //chose token
-// var token = X
+// //chose self.gameInfo.turn
+// var self.gameInfo.turn = X
 // //select a field
 // ng-click
 // //field selection is locked
@@ -106,7 +150,7 @@ myApp.controller('MainController', MainController);
 // var boxes = document.getElementsByClassName("tile");
 
 // //represents the next move
-// var token = "X";
+// var self.gameInfo.turn = "X";
 
 // //handels click of a box
 // function handlePlayerClick(e){
@@ -119,14 +163,14 @@ myApp.controller('MainController', MainController);
 // 		return
 // 	}
 
-// 	//display token in box
-// 	e.target.innerHTML = token
+// 	//display self.gameInfo.turn in box
+// 	e.target.innerHTML = self.gameInfo.turn
 
 // 	//change to other player
-// 	if (token === "X"){
-// 		token = "O";
+// 	if (self.gameInfo.turn === "X"){
+// 		self.gameInfo.turn = "O";
 // 	} else { 
-// 		token = "X"; 
+// 		self.gameInfo.turn = "X"; 
 // 	}
 // 	//check for winner
 // 	/*console.log(boxes);
@@ -153,20 +197,20 @@ myApp.controller('MainController', MainController);
 
 // /*While var get getinnerhtml.ID is not winningCombinations = [[a,b,c] , [d,e,f] , [g,h,i] , [a,d,g] , [b,e,h] , [c,f,i] , [a,e,i] , [g,e,c]]
 
-// /Other wise alert token "is the winner!"*/
+// /Other wise alert self.gameInfo.turn "is the winner!"*/
 
 // 	/*
-// 	if (token == "X"){
-// 		console.log(token);
+// 	if (self.gameInfo.turn == "X"){
+// 		console.log(self.gameInfo.turn);
 // 		this.innerHTML = "X";
-// 		token = "O";
-// 		console.log(token);
+// 		self.gameInfo.turn = "O";
+// 		console.log(self.gameInfo.turn);
 // 	}
 // 	else { 
 // 		this.innerHTML= "O";
-// 		console.log(token);
-// 		token = "X";
-// 		console.log(token);
+// 		console.log(self.gameInfo.turn);
+// 		self.gameInfo.turn = "X";
+// 		console.log(self.gameInfo.turn);
 // 	}
 // 	*/
 
