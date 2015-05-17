@@ -7,9 +7,13 @@ myApp.controller('MainController', MainController);
 		var token = "X";
 //self.winner returns a token when get.Winner becomes truthy
 		self.winner = ""
-//self.clickBox listens to the click
+//displays the grid
 		self.grid = getGrid()
+//self.clickBox listens to the click		
 		self.clickBox = clickBox;
+//reset the field back to empty
+		self.reset = reset;
+
 		self.getWinner = getWinner;	
 		self.grid = [{status: null},{status: null},{status: null},
 					 {status: null},{status: null},{status: null},
@@ -41,11 +45,9 @@ myApp.controller('MainController', MainController);
 	}else{
 		token = "O"
 	}
-
-	if self.getWinner
 	
 } 
-function getWinner(){
+	function getWinner(){
 	if ((self.grid[0].status === token) && (self.grid[1].status === token) && (self.grid[2].status === token)||
 		(self.grid[3].status === token) && (self.grid[4].status === token) && (self.grid[5].status === token)||
 		(self.grid[6].status === token) && (self.grid[7].status === token) && (self.grid[8].status === token)||
@@ -59,8 +61,15 @@ function getWinner(){
 	){
 		self.winner = token + " wins!"
 	}
+	}
+		
+		function reset(){
+		console.log("reset is on!")
+			for(var i = 0; i < 9; i++){
+			self.grid[i].status = "";}
+		} 
 }
-}
+
 				
 // // 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
 // // 		boxes[6].innerHTML == "X" && boxes[7].innerHTML == "X" && boxes[8].innerHTML == "X" ||
