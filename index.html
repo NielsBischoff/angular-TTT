@@ -14,7 +14,7 @@
         <script src="JS/controller.js"></script>
     </head>
     <body ng-controller="MainController as mainCtrl">
-        
+        <button type="button" ng-click="mainCtrl.reset();">Reset</button>
         <div class="board">
             <h1>{{mainCtrl.winner}}</h1>
             <div class="holes" ng-repeat="box in mainCtrl.grid" 
@@ -23,7 +23,6 @@
                                          O: box.status === 'O'}"> 
 
             </div>
-
             
 
         </div>

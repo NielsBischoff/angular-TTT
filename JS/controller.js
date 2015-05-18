@@ -1,66 +1,124 @@
-myApp.controller('MainController', MainController);
+angular
+	.module('myApp')
+	.controller('MainController', MainController);
 
 	MainController.$inject = ['$firebaseArray']
 
 	function MainController($firebaseArray){
 		var self = this;
-		var token = "X";
-//self.winner returns a token when get.Winner becomes truthy
-		self.winner = ""
-//self.clickBox listens to the click
-		self.grid = getGrid()
-		self.clickBox = clickBox;
-		self.getWinner = getWinner;	
-		self.grid = [{status: null},{status: null},{status: null},
-					 {status: null},{status: null},{status: null},
-					 {status: null},{status: null},{status: null}];
+		self.gameInfo = gameInfo();
+// //self.winner returns a self.gameInfo.turn when get.Winner becomes truthy
+ // 	self.winner = ""
+//displays the grid
+		self.grid = getGrid();
+		
+// //self.clickBox listens to the click		
+ 		self.clickBox = clickBox;
+ 		//console.log(self.grid[index]);
+// //reset the field back to empty
+// 		self.reset = reset;
 
-	function getGrid() {			 
-  	var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid1");
-	var board = $firebaseArray(ref);
-            return board;}
-        
+		self.gameInfo = gameInfo();
+		
 
-//field gets clicked and array index gets pased into function					 
+		//self.getWinner = getWinner;	
+		// self.grid = [{status: null},{status: null},{status: null},
+		// 			 {status: null},{status: null},{status: null},
+		// 			 {status: null},{status: null},{status: null}];
+
+
+			
+
+		function getGrid() {			 
+	  		var ref = new Firebase("https://tictactoe549872de.firebaseio.com/gird1");
+			var board = $firebaseArray(ref);
+	            return board
+	            self.grid.$save(self.grid[index])
+	    }
+	    
+	    function gameInfo() {			 
+	  		var ref = new Firebase("https://tictactoe549872de.firebaseio.com/grid2");
+			var info = $firebaseArray(ref);
+	            return info
+	    }   
+	
+
+	//field gets clicked and array index gets pased into function				 
 		function clickBox(index){
-//double function; if self winner exists stop or if
-	
+			self.grid[index].property = 'X'
+			console.log(self.grid[index])
 
-	if(self.winner || self.grid[index].status){
-	return;	
+			if (self.grid[index].property === "O"){
+				self.grid[index].property = "X" 
+			}else{
+				self.grid[index].property = "O"
+			}
+
+			
+	//double function; if self winner exists - stop || prevent double click ||
+	 	if(self.winner || self.grid[index].status){
+	 	return	
+	 	}
+	 	self.grid.$save(self.grid[index].status)
 	}
-
-	console.log(index)
-	self.grid[index].status = token
-	console.log(self.grid[index])
 	
-	self.getWinner()
-
-	if (token === "O"){
-		token = "X" 
-	}else{
-		token = "O"
-	}
-
-	if self.getWinner
+// 	console.log(index)
+// 	self.grid[index].status = self.gameInfo.turn
+// 	console.log(self.grid[index])
 	
-} 
-function getWinner(){
-	if ((self.grid[0].status === token) && (self.grid[1].status === token) && (self.grid[2].status === token)||
-		(self.grid[3].status === token) && (self.grid[4].status === token) && (self.grid[5].status === token)||
-		(self.grid[6].status === token) && (self.grid[7].status === token) && (self.grid[8].status === token)||
+//	self.getWinner()
+// //tie function
+// 	var no_tie = false;
+// 	for (var i = 0; i < 9; i++){
+// 		if(self.grid[i].status == null)
+// 		{ no_tie = true;
+// 		}
+// 		}
+// 	if(no_tie === false){
+// 		self.winner = "It's a Tie!"
+// 	}
 
-		(self.grid[0].status === token) && (self.grid[3].status === token) && (self.grid[6].status === token)||
-		(self.grid[4].status === token) && (self.grid[1].status === token) && (self.grid[7].status === token)||
-		(self.grid[2].status === token) && (self.grid[5].status === token) && (self.grid[8].status === token)||
 
-		(self.grid[0].status === token) && (self.grid[4].status === token) && (self.grid[8].status === token)||
-		(self.grid[6].status === token) && (self.grid[4].status === token) && (self.grid[2].status === token)
+
+	
+	
+// } 
+	function getWinner(){
+	if ((self.grid[0].status === self.gameInfo.turn) && (self.grid[1].status === self.gameInfo.turn) && (self.grid[2].status === self.gameInfo.turn)||
+		(self.grid[3].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[5].status === self.gameInfo.turn)||
+		(self.grid[6].status === self.gameInfo.turn) && (self.grid[7].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
+
+		(self.grid[0].status === self.gameInfo.turn) && (self.grid[3].status === self.gameInfo.turn) && (self.grid[6].status === self.gameInfo.turn)||
+		(self.grid[4].status === self.gameInfo.turn) && (self.grid[1].status === self.gameInfo.turn) && (self.grid[7].status === self.gameInfo.turn)||
+		(self.grid[2].status === self.gameInfo.turn) && (self.grid[5].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
+
+		(self.grid[0].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[8].status === self.gameInfo.turn)||
+		(self.grid[6].status === self.gameInfo.turn) && (self.grid[4].status === self.gameInfo.turn) && (self.grid[2].status === self.gameInfo.turn)
 	){
-		self.winner = token + " wins!"
+		self.winner = self.gameInfo.turn + " wins!"
 	}
-}
-}
+	}
+		
+// 		function reset(){
+// 		console.log("reset is on!")
+// 			for(var i = 0; i < 9; i++){
+// 			self.grid[i].status = "";}
+// 		} 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				
 // // 		boxes[3].innerHTML == "X" && boxes[4].innerHTML == "X" && boxes[5].innerHTML == "X" ||
 // // 		boxes[6].innerHTML == "X" && boxes[7].innerHTML == "X" && boxes[8].innerHTML == "X" ||
@@ -73,8 +131,8 @@ function getWinner(){
 
 // 	}
 
-// //chose token
-// var token = X
+// //chose self.gameInfo.turn
+// var self.gameInfo.turn = X
 // //select a field
 // ng-click
 // //field selection is locked
@@ -97,7 +155,7 @@ function getWinner(){
 // var boxes = document.getElementsByClassName("tile");
 
 // //represents the next move
-// var token = "X";
+// var self.gameInfo.turn = "X";
 
 // //handels click of a box
 // function handlePlayerClick(e){
@@ -110,14 +168,14 @@ function getWinner(){
 // 		return
 // 	}
 
-// 	//display token in box
-// 	e.target.innerHTML = token
+// 	//display self.gameInfo.turn in box
+// 	e.target.innerHTML = self.gameInfo.turn
 
 // 	//change to other player
-// 	if (token === "X"){
-// 		token = "O";
+// 	if (self.gameInfo.turn === "X"){
+// 		self.gameInfo.turn = "O";
 // 	} else { 
-// 		token = "X"; 
+// 		self.gameInfo.turn = "X"; 
 // 	}
 // 	//check for winner
 // 	/*console.log(boxes);
@@ -144,20 +202,20 @@ function getWinner(){
 
 // /*While var get getinnerhtml.ID is not winningCombinations = [[a,b,c] , [d,e,f] , [g,h,i] , [a,d,g] , [b,e,h] , [c,f,i] , [a,e,i] , [g,e,c]]
 
-// /Other wise alert token "is the winner!"*/
+// /Other wise alert self.gameInfo.turn "is the winner!"*/
 
 // 	/*
-// 	if (token == "X"){
-// 		console.log(token);
+// 	if (self.gameInfo.turn == "X"){
+// 		console.log(self.gameInfo.turn);
 // 		this.innerHTML = "X";
-// 		token = "O";
-// 		console.log(token);
+// 		self.gameInfo.turn = "O";
+// 		console.log(self.gameInfo.turn);
 // 	}
 // 	else { 
 // 		this.innerHTML= "O";
-// 		console.log(token);
-// 		token = "X";
-// 		console.log(token);
+// 		console.log(self.gameInfo.turn);
+// 		self.gameInfo.turn = "X";
+// 		console.log(self.gameInfo.turn);
 // 	}
 // 	*/
 

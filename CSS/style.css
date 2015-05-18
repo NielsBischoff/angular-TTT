@@ -1,5 +1,6 @@
 html {
-    background-image: url("https://i.imgur.com/LoxwiRU.jpge");
+    background-image: url(ttt.jpg);
+    background-image: cover;
   }
 
 .board {
@@ -20,7 +21,11 @@ html {
 }
 .X{
 	background-image: url(x.jpg) ;
+    background-image: cover;
+
 }
 .O{
 	background-image: url(o.jpg) ;
+    background-image: cover;
+
 }
