@@ -11,9 +11,10 @@ angular
  // 	self.winner = ""
 //displays the grid
 		self.grid = getGrid();
+		
 // //self.clickBox listens to the click		
  		self.clickBox = clickBox;
- 		console.log("works")
+ 		//console.log(self.grid[index]);
 // //reset the field back to empty
 // 		self.reset = reset;
 
@@ -26,11 +27,13 @@ angular
 		// 			 {status: null},{status: null},{status: null}];
 
 
+			
 
 		function getGrid() {			 
 	  		var ref = new Firebase("https://tictactoe549872de.firebaseio.com/gird1");
 			var board = $firebaseArray(ref);
 	            return board
+	            self.grid.$save(self.grid[index])
 	    }
 	    
 	    function gameInfo() {			 
@@ -42,10 +45,21 @@ angular
 
 	//field gets clicked and array index gets pased into function				 
 		function clickBox(index){
+			self.grid[index].property = 'X'
+			console.log(self.grid[index])
+
+			if (self.grid[index].property === "O"){
+				self.grid[index].property = "X" 
+			}else{
+				self.grid[index].property = "O"
+			}
+
+			
 	//double function; if self winner exists - stop || prevent double click ||
 	 	if(self.winner || self.grid[index].status){
 	 	return	
 	 	}
+	 	self.grid.$save(self.grid[index].status)
 	}
 	
 // 	console.log(index)
@@ -66,17 +80,8 @@ angular
 
 
 
-// 	if (self.gameInfo.turn === ""X){
-// 		self.gameInfo.turn = "X" 
-// 		//pushing up info to firebase
-// 	self.getGrid.$save(self.getGrid);	
-// 	}
-
-// 	else{
-// 		self.gameInfo.turn = "O"
-// 	self.getGrid.$save(self.getGrid);	
-// 	}
-// 	self.getGrid.$save(self.getGrid);	
+	
+	
 // } 
 	function getWinner(){
 	if ((self.grid[0].status === self.gameInfo.turn) && (self.grid[1].status === self.gameInfo.turn) && (self.grid[2].status === self.gameInfo.turn)||
